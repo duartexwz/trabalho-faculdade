@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desenvolvimento Web Full Stack — Tecno Brasília</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/front/assets/main.css">
+  <style>
+    :root {
+      --primary-color: #10182B;
+      --primary-dark: #060A14;
+      --primary-light: #1C2A47;
+      --accent-color: #C9A24B;
+      --accent-light: #E4C77C;
+      --bg-white: #FFFFFF;
+      --bg-light: #F4F5F7;
+      --text-dark: #161B26;
+      --text-muted: #5B6473;
+      --border-color: #E1E4E9;
+      --success: #2F8F5B;
+    }
+    .course-hero { background: linear-gradient(135deg, var(--primary-dark), var(--primary-color)); padding: 120px 0 60px; }
+    .course-sticky { position: sticky; top: 90px; }
+    .price-card { background: var(--bg-white); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-xl); padding: 2rem; border-top: 5px solid var(--accent-color); }
+    .module-item { padding: 1rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); margin-bottom: 0.75rem; cursor: pointer; transition: all var(--transition); }
+    .module-item:hover { border-color: var(--accent-color); background: rgba(201,162,75,0.06); }
+    .module-header { display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: var(--font-size-sm); color: var(--primary-color); }
+    .module-lessons { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color); display: none; }
+    .module-lessons.open { display: block; }
+    .lesson-item { display: flex; align-items: center; gap: 0.6rem; font-size: var(--font-size-xs); color: var(--text-muted); padding: 0.3rem 0; }
+    .include-item { display: flex; align-items: center; gap: 0.75rem; font-size: var(--font-size-sm); padding: 0.5rem 0; color: var(--text-dark); }
+    .include-item i { color: var(--success); width: 18px; }
+    .instructor-card { display: flex; align-items: center; gap: 1.25rem; padding: 1.5rem; background: var(--bg-light); border-radius: var(--border-radius); }
+    .instructor-avatar { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; font-weight: 700; color: white; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Tecno <span>Brasília</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <i class="fas fa-bars" style="color: var(--primary-color);"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+          <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cursos.html">Cursos</a></li>
+          <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+          <li class="nav-item ms-lg-2"><a class="nav-link btn-navbar" href="login.html"><i class="fas fa-user me-1"></i>Entrar</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="course-hero">
+    <div class="container">
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Início</a></li>
+          <li class="breadcrumb-item"><a href="cursos.html">Cursos</a></li>
+          <li class="breadcrumb-item active">Full Stack Dev</li>
+        </ol>
+      </nav>
+      <div class="row">
+        <div class="col-lg-8">
+          <span style="background: rgba(201,162,75,0.2); color: var(--accent-light); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0.35rem 0.85rem; border-radius: var(--border-radius-pill); border: 1px solid rgba(201,162,75,0.35);">💻 Tecnologia</span>
+          <h1 style="font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.8rem); color: white; font-weight: 900; margin: 1rem 0 1.25rem; line-height: 1.15;">Desenvolvimento Web Full Stack</h1>
+          <p style="color: rgba(255,255,255,0.8); font-size: 1.05rem; line-height: 1.7; max-width: 600px;">Domine o desenvolvimento web completo — do front-end ao back-end — e conquiste sua vaga como desenvolvedor com um portfólio de projetos reais.</p>
+          <div class="d-flex flex-wrap gap-4 mt-3">
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+              <span style="color: #ffc107;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+              <span style="color:white;font-weight:700;">4.9</span>
+              <span style="color:rgba(255,255,255,0.55);font-size:0.85rem;">(1.240 avaliações)</span>
+            </div>
+            <span style="color:rgba(255,255,255,0.7);font-size:0.85rem;"><i class="fas fa-users me-1"></i> 3.240 alunos</span>
+            <span style="color:rgba(255,255,255,0.7);font-size:0.85rem;"><i class="fas fa-clock me-1"></i> 120 horas</span>
+            <span style="color:rgba(255,255,255,0.7);font-size:0.85rem;"><i class="fas fa-calendar me-1"></i> Atualizado Jun/2025</span>
+          </div>
+          <div class="mt-3">
+            <span style="color:rgba(255,255,255,0.65);font-size:0.85rem;">Por <strong style="color:var(--accent-color);">Prof. Lucas Ferreira</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 60px 0; background: var(--bg-light);">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-8">
+
+          <div class="form-card mb-4">
+            <h3 style="font-family: var(--font-heading); color: var(--primary-color); margin-bottom: 1.5rem;">O que você vai aprender</h3>
+            <div class="row g-2">
+              <div class="col-sm-6"><div class="include-item"><i class="fas fa-check-circle"></i><span>HTML5, CSS3 e JavaScript moderno</span></div></div>
+              <div class="col-sm-6"><div class="include-item"><i class="fas fa-check-circle"></i><span>React.js com hooks e context API</span></div></div>
+              <div class="col-sm-6"><div class="include-item"><i class="fas fa-check-circle"></i><span>Node.js e Express do zero</span></div></div>
+              <div class="col-sm-6"><div class="include-item"><i class="fas fa-check-circle"></i><span>Banco de dados SQL e NoSQL</span></div></div>
+              <div class="col-sm-6"><div class="include-item"><i class="fas fa-check-circle"></i><span>APIs REST e autenticação JWT</span></div></div>
+              <div class="col-sm-6"><div class="include-item"><i class="fas fa-check-circle"></i><span>Deploy na AWS e Vercel</span></div></div>
+              <div class="col-sm-6"><div class="include-item"><i class="fas fa-check-circle"></i><span>Git, GitHub e boas práticas</span></div></div>
+              <div class="col-sm-6"><div class="include-item"><i class="fas fa-check-circle"></i><span>3 projetos reais para portfólio</span></div></div>
+            </div>
+          </div>
+
+          <div class="form-card mb-4">
+            <h3 style="font-family: var(--font-heading); color: var(--primary-color); margin-bottom: 0.5rem;">Conteúdo do curso</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">8 módulos · 120 horas · 96 aulas</p>
+
+            <div class="module-item">
+              <div class="module-header" onclick="toggleModule(this)">
+                <span>Módulo 1 — Fundamentos Web (HTML5 e CSS3)</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="module-lessons">
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Introdução ao HTML5 — 18min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Semântica e acessibilidade — 24min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> CSS3 Flexbox na prática — 35min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> CSS Grid para layouts modernos — 42min</div>
+                <div class="lesson-item"><i class="fas fa-file-alt" style="color: var(--primary-color);"></i> Projeto: Landing Page responsiva</div>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-header" onclick="toggleModule(this)">
+                <span>Módulo 2 — JavaScript Moderno (ES6+)</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="module-lessons">
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Arrow functions e destructuring — 28min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Promises e async/await — 38min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Manipulação do DOM — 45min</div>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-header" onclick="toggleModule(this)">
+                <span>Módulo 3 — React.js do Zero ao Avançado</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="module-lessons">
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Componentes e props — 32min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Hooks: useState e useEffect — 48min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Context API e gerenciamento de estado — 55min</div>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-header" onclick="toggleModule(this)">
+                <span>Módulo 4 — Back-end com Node.js e Express</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="module-lessons">
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Configurando o ambiente Node.js — 20min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Criando APIs REST com Express — 60min</div>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-header" onclick="toggleModule(this)">
+                <span>Módulos 5–8 — Banco de Dados, Auth, Deploy e Projetos</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="module-lessons">
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> PostgreSQL e MongoDB — 90min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Autenticação JWT — 55min</div>
+                <div class="lesson-item"><i class="fas fa-play-circle" style="color: var(--accent-color);"></i> Deploy completo AWS + Vercel — 70min</div>
+                <div class="lesson-item"><i class="fas fa-file-alt" style="color: var(--primary-color);"></i> Projeto Final: SaaS completo</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card mb-4">
+            <h3 style="font-family: var(--font-heading); color: var(--primary-color); margin-bottom: 1.5rem;">Instrutor</h3>
+            <div class="instructor-card">
+              <div class="instructor-avatar">LF</div>
+              <div>
+                <h5 style="font-family: var(--font-heading); color: var(--primary-color); margin-bottom: 0.25rem;">Prof. Lucas Ferreira</h5>
+                <p style="color: var(--accent-color); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">Desenvolvedor Full Stack Sênior · 12 anos de experiência</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0; line-height: 1.6;">Ex-engenheiro da Nubank e iFood. Apaixonado por ensinar desenvolvimento com foco em projetos do mundo real.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-4">
+          <div class="course-sticky">
+            <div class="price-card">
+              <div style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 900; color: var(--primary-color);">R$ 497</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); text-decoration: line-through; margin-top: -0.25rem;">De R$ 997</div>
+              <div style="background: rgba(47,143,91,0.12); color: var(--success); font-size: 0.78rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: var(--border-radius-pill); display: inline-block; margin-top: 0.5rem;">🔥 50% OFF — Oferta por tempo limitado</div>
+              <a href="matricula.html?curso=full-stack" class="btn-accent-custom w-100 text-center d-block mt-3" style="font-size: 0.95rem;">
+                <i class="fas fa-rocket me-2"></i>Matricular agora
+              </a>
+              <a href="matricula.html" class="btn-primary-custom w-100 text-center d-block mt-2" style="font-size: 0.85rem;">
+                <i class="fas fa-credit-card me-2"></i>Parcelar em até 12x
+              </a>
+              <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 0.75rem;">
+                <i class="fas fa-shield-alt me-1" style="color: var(--success);"></i> Garantia de 7 dias ou seu dinheiro de volta
+              </p>
+              <hr style="border-color: var(--border-color);">
+              <h6 style="font-weight: 700; color: var(--primary-color); font-size: 0.85rem; margin-bottom: 1rem;">Este curso inclui:</h6>
+              <div class="include-item"><i class="fas fa-video"></i><span>120h de vídeo em HD</span></div>
+              <div class="include-item"><i class="fas fa-infinity"></i><span>Acesso vitalício</span></div>
+              <div class="include-item"><i class="fas fa-mobile-alt"></i><span>Acesso no celular e tablet</span></div>
+              <div class="include-item"><i class="fas fa-download"></i><span>Materiais para download</span></div>
+              <div class="include-item"><i class="fas fa-certificate"></i><span>Certificado de conclusão</span></div>
+              <div class="include-item"><i class="fas fa-briefcase"></i><span>Acesso ao banco de vagas</span></div>
+              <div class="include-item"><i class="fas fa-headset"></i><span>Suporte com tutores</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <span class="footer-brand">Tecno <span>Brasília</span></span>
+          <p class="footer-description">Há mais de 10 anos formando profissionais de alto desempenho.</p>
+          <div class="footer-social">
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-2">
+          <h5 class="footer-heading">Navegação</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="cursos.html">Cursos</a></li>
+            <li><a href="matricula.html">Matrícula</a></li>
+            <li><a href="contato.html">Contato</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h5 class="footer-heading">Contato</h5>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope footer-contact-icon"></i>
+            <span>contato@tecnobrasilia.com.br</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Tecno Brasília. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    function toggleModule(header) {
+      const lessons = header.nextElementSibling;
+      const icon = header.querySelector('i');
+      lessons.classList.toggle('open');
+      icon.style.transform = lessons.classList.contains('open') ? 'rotate(180deg)' : '';
+      icon.style.transition = '0.3s';
+    }
+  </script>
+</body>
+</html>

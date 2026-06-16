@@ -27,16 +27,13 @@ async def create_admin(admin: AdminSchema, current_user: CurrentUser, session: T
     if current_user.acesso != "Administrador":
         raise HTTPException(status_code=HTTPStatus.FORBIDDEN, detail="Permissão negada para esse tipo de ação")
 
-    admin_db = await session.scalar(select(Admin).where((Admin.username == admin.username) | (Admin.email_admin == admin.email_admin)))
+    admin_db = await session.scalar(select(Admin).where(Admin.username == admin.username))
 
     if admin_db:
         if admin_db.username:
-            raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um administrador com esse username")
+            raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um administrador com esse email")
 
-        if admin_db.email_admin:
-            raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já tem um adinistrador com esse email")
-
-    admin_db = Admin(username=admin.username, email_admin=admin.email_admin, password=get_password_hash(admin.password), acesso=admin.acesso)
+    admin_db = Admin(username=admin.username, password=get_password_hash(admin.password), acesso=admin.acesso)
 
     session.add(admin_db)
     await session.commit()
@@ -70,11 +67,6 @@ async def update_admin(admin_id: int, session: T_session, current_user: CurrentU
     if admin.username:
         username_em_uso = await session.scalar(select(Admin).where(Admin.username == admin.username, Admin.id != admin_id))
         if username_em_uso:
-            raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um administrador com esse username")
-
-    if admin.email_admin:
-        email_em_uso = await session.scalar(select(Admin).where(Admin.email_admin == admin.email_admin, Admin.id != admin_id))
-        if email_em_uso:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já tem um adinistrador com esse email")
 
     for campo, valor in admin.model_dump(exclude_none=True).items():

@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr
 
 class AlunosSchemas(BaseModel):
     nome: str
-    email: EmailStr
+    username: EmailStr
     cpf: str
     acesso: str
     password: str
@@ -12,7 +12,7 @@ class AlunosSchemas(BaseModel):
 class AlunosResponse(BaseModel):
     id: int
     nome: str
-    email: EmailStr
+    username: EmailStr
     acesso: str
     cpf: str
 
@@ -35,7 +35,7 @@ class AlunosFilter(BaseModel):
     nome: str | None = None
     cpf: str | None = None
     acesso: str | None = None
-    email: EmailStr | None = None
+    username: EmailStr | None = None
     offset: int = 0
     limit: int = 10
 
@@ -44,7 +44,7 @@ class AlunosUpdate(BaseModel):
     nome: str | None = None
     cpf: str | None = None
     acesso: str | None = None
-    email: EmailStr | None = None
+    username: EmailStr | None = None
     password: str | None = None
 
 

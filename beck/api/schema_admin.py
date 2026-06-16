@@ -2,16 +2,14 @@ from pydantic import BaseModel, EmailStr
 
 
 class AdminSchema(BaseModel):
-    username: str
-    email_admin: EmailStr
+    username: EmailStr
     password: str
     acesso: str
 
 
 class AdminResponse(BaseModel):
     id: int
-    username: str
-    email_admin: EmailStr
+    username: EmailStr
     acesso: str
 
 
@@ -30,18 +28,16 @@ class FilterPage(BaseModel):
 
 
 class AdminFilter(BaseModel):
-    username: str | None = None
+    username: EmailStr | None = None
     acesso: str | None = None
-    email_admin: EmailStr | None = None
     offset: int = 0
     limit: int = 10
 
 
 class AdminUpdate(BaseModel):
-    username: str | None = None
+    username: EmailStr | None = None
     password: str | None = None
     acesso: str | None = None
-    email_admin: EmailStr | None = None
 
 
 class AdminList(BaseModel):

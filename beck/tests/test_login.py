@@ -6,7 +6,7 @@ from freezegun import freeze_time
 
 @pytest.mark.asyncio
 async def test_token(client, user_ti):
-    response = await client.post("/login", data={"username": user_ti.username, "password": "admin.admin"})
+    response = await client.post("/login/", data={"username": user_ti.username, "password": "admin.admin"})
     # breakpoint()
     assert response.status_code == HTTPStatus.OK
 
@@ -15,7 +15,7 @@ async def test_token(client, user_ti):
 async def test_username_nao_autorizado(client):
     payload = {"username": "teste", "password": "secret"}
 
-    response = await client.post("/login", data=payload)
+    response = await client.post("/login/", data=payload)
 
     assert response.status_code == HTTPStatus.UNAUTHORIZED
     assert response.json() == {"detail": "Incorrect email or password"}
@@ -25,7 +25,7 @@ async def test_username_nao_autorizado(client):
 async def test_senha_nao_autorizado(client, admin_teste):
     payload = {"username": "Admin", "password": "admin.123456"}
 
-    response = await client.post("/login", data=payload)
+    response = await client.post("/login/", data=payload)
 
     # breakpoint()
 
@@ -36,9 +36,13 @@ async def test_senha_nao_autorizado(client, admin_teste):
 @pytest.mark.asyncio
 async def test_criar_curso_permissao_negada(client, session, admin_teste):
 
+    session.add(admin_teste)
+    await session.commit()
+    await session.refresh(admin_teste)
+
     login = await client.post(
-        "/login",
-        data={"username": "Admin", "password": "admin.admin", "acesso": "Comum"},
+        "/login/",
+        data={"username": admin_teste.username, "password": "admin.admin", "acesso": "Comum"},
     )
     # breakpoint()
     token = login.json()["access_token"]
@@ -62,7 +66,7 @@ async def test_criar_curso_permissao_negada(client, session, admin_teste):
 async def test_token_expiret_after_time(client, user_ti):
     with freeze_time("2026-06-16 11:10"):
         response = await client.post(
-            "/login",
+            "/login/",
             data={"username": user_ti.username, "password": user_ti.clean_password},
         )
 
@@ -86,7 +90,7 @@ async def test_token_expiret_after_time(client, user_ti):
 
 @pytest.mark.asyncio
 async def test_token_inexistent_user(client):
-    response = await client.post("/login", data={"username": "no@user.com", "password": "testtest"})
+    response = await client.post("/login/", data={"username": "no@user.com", "password": "testtest"})
 
     assert response.status_code == HTTPStatus.UNAUTHORIZED
     assert response.json() == {"detail": "Incorrect email or password"}
@@ -94,7 +98,7 @@ async def test_token_inexistent_user(client):
 
 @pytest.mark.asyncio
 async def test_token_wrong_password(client, user_ti):
-    response = await client.post("/login", data={"username": user_ti.username, "password": "wrong_password"})
+    response = await client.post("/login/", data={"username": user_ti.username, "password": "wrong_password"})
     assert response.status_code == HTTPStatus.UNAUTHORIZED
     assert response.json() == {"detail": "Incorrect email or password"}
 
@@ -120,7 +124,7 @@ async def test_refresh_token(client, token):
 async def test_token_expired_dont_refresh(client, user_ti):
     with freeze_time("2023-07-14 12:00:00"):
         response = await client.post(
-            "/login",
+            "/login/",
             data={"username": user_ti.username, "password": user_ti.clean_password},
         )
         assert response.status_code == HTTPStatus.OK

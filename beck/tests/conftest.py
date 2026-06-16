@@ -19,8 +19,7 @@ class UserTiFactory(factory.Factory):  # type: ignore
     class Meta:  # type: ignore
         model = Admin
 
-    username = factory.Faker("first_name")  # type: ignore
-    email_admin = factory.Faker("safe_email")  # type: ignore
+    username = factory.Faker("safe_email")  # type: ignore
     password = "admin.admin"
     acesso = "Administrador"
 
@@ -30,7 +29,7 @@ class AlunosFactory(factory.Factory):  # type: ignore
         model = Alunos
 
     nome = factory.Faker("first_name")  # type: ignore
-    email = factory.Faker("safe_email")  # type: ignore
+    username = factory.Faker("safe_email")  # type: ignore
     cpf = "012.954.852-99"
     password = "aluno.123"
     acesso = "Comum"
@@ -97,7 +96,7 @@ async def user_ti(session):
 
 @pytest_asyncio.fixture
 async def admin_teste(session):
-    admin = Admin(username="Admin", email_admin="admin@info.com", password=get_password_hash("admin.admin"), acesso="Comum")
+    admin = Admin(username="admin@info.com", password=get_password_hash("admin.admin"), acesso="Comum")
 
     session.add(admin)
     await session.commit()
@@ -108,7 +107,7 @@ async def admin_teste(session):
 
 @pytest_asyncio.fixture
 async def admin_teste_2(session):
-    admin = Admin(username="Admin", email_admin="admin2@info.com", password=get_password_hash("admin.admin"), acesso="Administrador")
+    admin = Admin(username="admin2@info.com", password=get_password_hash("admin.admin"), acesso="Administrador")
 
     session.add(admin)
     await session.commit()
@@ -152,7 +151,7 @@ async def cursos(session):
 
 @pytest_asyncio.fixture
 async def token(client, user_ti):
-    response = await client.post("/login", data={"username": user_ti.username, "password": user_ti.clean_password})
+    response = await client.post("/login/", data={"username": user_ti.username, "password": user_ti.clean_password})
 
     # breakpoint()
     print(response.json())

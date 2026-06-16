@@ -32,7 +32,7 @@ async def cadastrar_alunos(alunos: AlunosSchemas, session: T_session, current_us
         raise HTTPException(status_code=HTTPStatus.FORBIDDEN, detail="Permissão negada para esse tipo de ação")
 
     aluno_db = await session.scalar(
-        select(Alunos).where((Alunos.nome == alunos.nome) | (Alunos.cpf == converter_cpf(alunos.cpf)) | (Alunos.email == alunos.email))
+        select(Alunos).where((Alunos.nome == alunos.nome) | (Alunos.cpf == converter_cpf(alunos.cpf)) | (Alunos.username == alunos.username))
     )
 
     if aluno_db:
@@ -41,11 +41,11 @@ async def cadastrar_alunos(alunos: AlunosSchemas, session: T_session, current_us
 
         if aluno_db.cpf == alunos.cpf:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno cadastrado com esse CPF")
-        if aluno_db.email == alunos.email:
+        if aluno_db.username == alunos.username:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno cadastrado com esse email")
 
     aluno_db = Alunos(
-        nome=alunos.nome, email=alunos.email, cpf=converter_cpf(alunos.cpf), password=get_password_hash(alunos.password), acesso=alunos.acesso
+        nome=alunos.nome, username=alunos.username, cpf=converter_cpf(alunos.cpf), password=get_password_hash(alunos.password), acesso=alunos.acesso
     )
 
     session.add(aluno_db)
@@ -83,8 +83,8 @@ async def uptade_alunos(alunos_id: int, current_user: CurrentUser, session: T_se
         if username_em_uso:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno com esse nome")
 
-    if alunos.email:
-        email_em_uso = await session.scalar(select(Alunos).where(Alunos.email == alunos.email, Admin.id != alunos_id))
+    if alunos.username:
+        email_em_uso = await session.scalar(select(Alunos).where(Alunos.username == alunos.username, Admin.id != alunos_id))
         if email_em_uso:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já tem um aluno com esse email")
 

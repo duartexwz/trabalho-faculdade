@@ -31,7 +31,6 @@ class Admin:
 
     id: Mapped[int] = mapped_column(primary_key=True, init=False)
     username: Mapped[str] = mapped_column(unique=True)
-    email_admin: Mapped[str] = mapped_column(unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     acesso: Mapped[str] = mapped_column(nullable=False)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, init=False, server_default=func.now())
@@ -44,7 +43,7 @@ class Alunos:
 
     id: Mapped[int] = mapped_column(primary_key=True, init=False)
     nome: Mapped[str] = mapped_column(unique=True, nullable=False)
-    email: Mapped[str] = mapped_column(unique=True)
+    username: Mapped[str] = mapped_column(unique=True)
     cpf: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str] = mapped_column()
     acesso: Mapped[str] = mapped_column()
