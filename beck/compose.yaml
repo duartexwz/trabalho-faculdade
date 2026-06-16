@@ -1,0 +1,27 @@
+services:
+  api_database:
+    image: postgres
+    volumes:
+     - pgdata:/var/lib/postgresql/18/docker
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: api_db
+      POSTGRES_PASSWORD: admin
+    ports:
+       - "5432:5432"
+
+
+  api_faculdade:
+    image: trabalho_faculdade_api
+    platform: linux/amd64
+    entrypoint: ["./entrypoint.sh"]
+    build: .
+    ports: 
+      - "8000:8000"
+    depends_on:
+      - api_database
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:admin@api_database:5432/api_db
+
+volumes:
+  pgdata:
