@@ -43,10 +43,11 @@ async def create_admin(admin: AdminSchema, current_user: CurrentUser, session: T
 
 
 @router.get("/", status_code=HTTPStatus.OK, response_model=AdminList)
-async def get_admin(session: T_session, filter_admin: FilterAdmin, current_user: CurrentUser):
+async def get_admin(
+    session: T_session,
+    filter_admin: FilterAdmin,
+):
 
-    if current_user.acesso != "Administrador":
-        raise HTTPException(status_code=HTTPStatus.FORBIDDEN, detail="Permissão negada para esse tipo de ação")
     get_admin = await session.scalars(select(Admin).offset(filter_admin.offset).limit(filter_admin.limit))
 
     filtrados = get_admin.all()

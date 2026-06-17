@@ -43,9 +43,22 @@ class Alunos:
 
     id: Mapped[int] = mapped_column(primary_key=True, init=False)
     nome: Mapped[str] = mapped_column(unique=True, nullable=False)
-    username: Mapped[str] = mapped_column(unique=True)
     cpf: Mapped[str] = mapped_column(unique=True)
-    password: Mapped[str] = mapped_column()
+    telefone: Mapped[str] = mapped_column(unique=True)
+    email: Mapped[str] = mapped_column(unique=True)
+    status: Mapped[str] = mapped_column(nullable=False)
+    created_at: Mapped[datetime] = mapped_column(TIMESTAMP, init=False, server_default=func.now())
+    updated_at: Mapped[Optional[datetime]] = mapped_column(TIMESTAMP, init=False, server_onupdate=func.now(), nullable=True)
+
+
+@table_registry.mapped_as_dataclass
+class Usuarios:
+    __tablename__ = "usuarios"
+
+    id: Mapped[int] = mapped_column(primary_key=True, init=False)
+    nome: Mapped[str] = mapped_column(unique=True)
+    username: Mapped[str] = mapped_column(unique=True)
+    password: Mapped[str] = mapped_column(unique=True)
     acesso: Mapped[str] = mapped_column()
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, init=False, server_default=func.now())
     updated_at: Mapped[Optional[datetime]] = mapped_column(TIMESTAMP, init=False, server_onupdate=func.now(), nullable=True)
@@ -56,8 +69,11 @@ class Matriculas:
     __tablename__ = "matriculas"
 
     id: Mapped[int] = mapped_column(primary_key=True, init=False)
+    nome: Mapped[str] = mapped_column(unique=True, nullable=False)
     aluno_id: Mapped[int] = mapped_column(ForeignKey("alunos.id", ondelete="CASCADE"))
     curso_id: Mapped[int] = mapped_column(ForeignKey("cursos.id", ondelete="CASCADE"))
     data_matricula: Mapped[Optional[datetime]] = mapped_column(TIMESTAMP, init=False, server_default=func.now())
+    cpf: Mapped[str] = mapped_column(unique=True)
+    telefone: Mapped[str] = mapped_column(unique=True)
+    email: Mapped[str] = mapped_column(unique=True)
     status: Mapped[str] = mapped_column(nullable=False)
-    valor_pago: Mapped[Decimal] = mapped_column(DECIMAL(10, 2))

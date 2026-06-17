@@ -13,7 +13,10 @@ class MatriculaFactory(factory.Factory):  # type: ignore
     aluno_id = 1
     curso_id = 1
     status = "Ativo"
-    valor_pago = 100.00
+    nome = factory.Faker("first_name")  # type: ignore
+    cpf = factory.Faker("cpf", locale="pt_BR")  # type: ignore
+    email = factory.Faker("safe_email")  # type: ignore
+    telefone = ("61984092729",)
 
 
 @pytest.mark.asyncio

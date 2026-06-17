@@ -13,3 +13,7 @@ class Settings(BaseSettings):
     CLIENT_SECRET: str
     CLIENT_ID: int
     ALGORITHM: str
+    ALLOW_ORIGINS: str
+
+
+settings = Settings()  # type: ignore

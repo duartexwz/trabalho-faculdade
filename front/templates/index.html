@@ -2,390 +2,137 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Tecno Brasília — Transforme sua carreira com cursos profissionalizantes de alta qualidade.">
-  <title>Tecno Brasília — Aprenda. Cresça. Conquiste.</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/front/assets/main.css">
-  <style>
-    :root {
-      --primary-color: #10182B;
-      --primary-dark: #060A14;
-      --primary-light: #1C2A47;
-      --accent-color: #C9A24B;
-      --accent-light: #E4C77C;
-      --bg-white: #FFFFFF;
-      --bg-light: #F4F5F7;
-      --text-dark: #161B26;
-      --text-muted: #5B6473;
-      --border-color: #E1E4E9;
-      --success: #2F8F5B;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Escola Tecno Brasília - Cursos de Tecnologia</title>
+  <meta name="description" content="Escola Tecno Brasília: cursos de programação, dados e tecnologia em Brasília. Forme-se com quem entende do mercado.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="/front/assets/style.css" rel="stylesheet">
 </head>
-<body>
-
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">Tecno <span>Brasília</span></a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-        <i class="fas fa-bars" style="color: var(--primary-color);"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="mainNav">
-        <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
-          <li class="nav-item"><a class="nav-link active" href="index.html">Início</a></li>
-          <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
-          <li class="nav-item"><a class="nav-link" href="cursos.html">Cursos</a></li>
-          <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
-          <li class="nav-item ms-lg-2"><a class="nav-link btn-navbar" href="login.html"><i class="fas fa-user me-1"></i>Entrar</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <section class="hero-section">
-    <div class="container">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-6">
-          <div class="hero-badge animate-fade-up animate-fade-up-delay-1">
-            <i class="fas fa-star"></i> #1 em educação profissional
-          </div>
-          <h1 class="hero-title animate-fade-up animate-fade-up-delay-2">
-            Aprenda com
-            <span>quem transforma</span>
-            carreiras
-          </h1>
-          <p class="hero-subtitle animate-fade-up animate-fade-up-delay-3">
-            Cursos online e presenciais ministrados por especialistas do mercado. Certificação reconhecida, suporte completo e vagas de emprego exclusivas.
-          </p>
-          <div class="d-flex gap-3 flex-wrap animate-fade-up animate-fade-up-delay-4">
-            <a href="cursos.html" class="btn-accent-custom">
-              <i class="fas fa-graduation-cap me-2"></i>Ver Cursos
-            </a>
-            <a href="sobre.html" class="btn-outline-custom">
-              <i class="fas fa-play me-2"></i>Conheça a Tecno Brasília
-            </a>
-          </div>
-          <div class="hero-stats animate-fade-up animate-fade-up-delay-4">
-            <div class="hero-stat">
-              <div class="hero-stat-number"><span data-counter="12500">0</span>+</div>
-              <div class="hero-stat-label">Alunos formados</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-number"><span data-counter="48">0</span></div>
-              <div class="hero-stat-label">Cursos ativos</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-number"><span data-counter="96">0</span>%</div>
-              <div class="hero-stat-label">Taxa de empregabilidade</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="hero-image-card animate-fade-up animate-fade-up-delay-3">
-            <div class="hero-feature-item">
-              <span class="hero-feature-icon">📱</span>
-              <div class="hero-feature-title">100% Online</div>
-              <div class="hero-feature-desc">Assista onde e quando quiser</div>
-            </div>
-            <div class="hero-feature-item">
-              <span class="hero-feature-icon">🏆</span>
-              <div class="hero-feature-title">Certificado</div>
-              <div class="hero-feature-desc">Reconhecido pelo mercado</div>
-            </div>
-            <div class="hero-feature-item">
-              <span class="hero-feature-icon">👨‍🏫</span>
-              <div class="hero-feature-title">Mentoria</div>
-              <div class="hero-feature-desc">Suporte de especialistas</div>
-            </div>
-            <div class="hero-feature-item">
-              <span class="hero-feature-icon">💼</span>
-              <div class="hero-feature-title">Empregabilidade</div>
-              <div class="hero-feature-desc">Vagas exclusivas para alunos</div>
-            </div>
-          </div>
+<body data-page="home">
+  <div id="navbar-mount"></div>
+  <main style="padding-top:80px">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container text-center">
+        <h1 class="display-4 fw-bold">Transforme seu futuro com tecnologia</h1>
+        <p class="lead mt-3">Cursos práticos de programação, dados e cloud em Brasília.</p>
+        <div class="mt-4">
+          <a href="cursos.html" class="btn btn-light btn-lg me-2">Ver cursos</a>
+          <a href="matricula.html" class="btn btn-outline-light btn-lg">Matricule-se</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="features-section">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <span class="section-eyebrow">Por que a Tecno Brasília?</span>
-        <h2 class="section-title">Tudo que você precisa para evoluir</h2>
-        <div class="section-divider"></div>
-        <p class="section-subtitle">Uma plataforma completa pensada para o sucesso do aluno, do primeiro acesso até a conquista do emprego.</p>
-      </div>
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-3 reveal">
-          <div class="feature-item">
-            <div class="feature-icon-box"><i class="fas fa-video"></i></div>
-            <div class="feature-text">
-              <h4>Aulas em HD</h4>
-              <p>Vídeos de alta qualidade com acesso vitalício para rever quando precisar.</p>
-            </div>
-          </div>
+    </section>
+    <!-- FEATURES (CSS Grid) -->
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Por que estudar na Tecno Brasília?</h2>
+          <p>Metodologia prática, professores do mercado e suporte de carreira.</p>
         </div>
-        <div class="col-md-6 col-lg-3 reveal">
-          <div class="feature-item">
-            <div class="feature-icon-box"><i class="fas fa-certificate"></i></div>
-            <div class="feature-text">
-              <h4>Certificação</h4>
-              <p>Certificados com verificação digital aceitos por mais de 500 empresas parceiras.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 reveal">
-          <div class="feature-item">
-            <div class="feature-icon-box"><i class="fas fa-headset"></i></div>
-            <div class="feature-text">
-              <h4>Suporte 24/7</h4>
-              <p>Tire dúvidas com nossos tutores a qualquer hora, sem limitações.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 reveal">
-          <div class="feature-item">
-            <div class="feature-icon-box"><i class="fas fa-briefcase"></i></div>
-            <div class="feature-text">
-              <h4>Banco de Empregos</h4>
-              <p>Acesso exclusivo a mais de 2.000 vagas em empresas parceiras da Tecno Brasília.</p>
-            </div>
-          </div>
+        <div class="features-grid">
+          <div class="feature-box"><i class="fas fa-laptop-code"></i><h5>Prática real</h5><p>Projetos baseados em desafios do mercado.</p></div>
+          <div class="feature-box"><i class="fas fa-user-tie"></i><h5>Mentores</h5><p>Profissionais ativos no mercado tech.</p></div>
+          <div class="feature-box"><i class="fas fa-briefcase"></i><h5>Empregabilidade</h5><p>Apoio na construção de portfólio e LinkedIn.</p></div>
+          <div class="feature-box"><i class="fas fa-clock"></i><h5>Flexível</h5><p>Aulas presenciais, online e híbridas.</p></div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="courses-section">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <span class="section-eyebrow">Aprenda agora</span>
-        <h2 class="section-title">Cursos em destaque</h2>
-        <div class="section-divider"></div>
-        <p class="section-subtitle">Passe o mouse sobre o card para ver os detalhes e se matricular.</p>
+    </section>
+    <!-- DESTAQUES (carregados via API) -->
+    <section class="section bg-light">
+      <div class="container">
+        <div class="section-title">
+          <h2>Cursos em destaque</h2>
+          <p>Confira nossos cursos mais procurados.</p>
+        </div>
+        <div id="cursos-destaque" class="row g-4">
+          <div class="col-12 text-center"><div class="spinner-border text-primary"></div></div>
+        </div>
+        <div class="text-center mt-4">
+          <a href="cursos.html" class="btn btn-primary">Ver todos os cursos</a>
+        </div>
       </div>
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4 reveal">
-          <div class="course-card-wrapper">
-            <div class="course-card">
-              <div class="course-card-front">
-                <div class="course-card-img-placeholder" style="background: linear-gradient(135deg, #1C2A47, #10182B);">💻</div>
-                <div class="course-card-body">
-                  <div class="course-tag">Tecnologia</div>
-                  <div class="course-title">Desenvolvimento Web Full Stack</div>
-                  <div class="course-info">
-                    <span><i class="fas fa-clock me-1"></i>120h</span>
-                    <span><i class="fas fa-users me-1"></i>3.240 alunos</span>
-                    <span><i class="fas fa-star me-1 text-warning"></i>4.9</span>
-                  </div>
-                  <div class="course-price-front mt-2">R$ 497</div>
-                </div>
+    </section>
+    <!-- DEPOIMENTOS (Carousel Bootstrap) -->
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>O que dizem nossos alunos</h2>
+        </div>
+        <div id="depoimentos" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="testimonial mx-auto" style="max-width:600px">
+                <img src="https://i.pravatar.cc/100?img=12" alt="Aluno">
+                <p>"O curso mudou minha carreira. Hoje trabalho como dev fullstack!"</p>
+                <strong>- João Silva</strong>
               </div>
-              <div class="course-card-back">
-                <div class="course-back-title">Full Stack Dev</div>
-                <div class="course-back-desc">HTML, CSS, JavaScript, React, Node.js, banco de dados e deploy na nuvem. Do zero ao profissional.</div>
-                <div class="course-back-price">R$ 497</div>
-                <a href="curso-detalhe.html?id=1" class="btn-accent-custom" style="font-size: 0.8rem; padding: 0.6rem 1.5rem;">Ver detalhes</a>
+            </div>
+            <div class="carousel-item">
+              <div class="testimonial mx-auto" style="max-width:600px">
+                <img src="https://i.pravatar.cc/100?img=32" alt="Aluna">
+                <p>"Professores excelentes e suporte sensacional."</p>
+                <strong>- Maria Souza</strong>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="testimonial mx-auto" style="max-width:600px">
+                <img src="https://i.pravatar.cc/100?img=45" alt="Aluno">
+                <p>"Conteúdo atualizado e alinhado ao mercado."</p>
+                <strong>- Pedro Lima</strong>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6 col-lg-4 reveal">
-          <div class="course-card-wrapper">
-            <div class="course-card">
-              <div class="course-card-front">
-                <div class="course-card-img-placeholder" style="background: linear-gradient(135deg, #3A2E1A, #C9A24B);">📊</div>
-                <div class="course-card-body">
-                  <div class="course-tag">Negócios</div>
-                  <div class="course-title">Marketing Digital e Vendas</div>
-                  <div class="course-info">
-                    <span><i class="fas fa-clock me-1"></i>80h</span>
-                    <span><i class="fas fa-users me-1"></i>5.118 alunos</span>
-                    <span><i class="fas fa-star me-1 text-warning"></i>4.8</span>
-                  </div>
-                  <div class="course-price-front mt-2">R$ 347</div>
-                </div>
-              </div>
-              <div class="course-card-back">
-                <div class="course-back-title">Marketing Digital</div>
-                <div class="course-back-desc">SEO, tráfego pago, redes sociais, copywriting e automação de marketing. Fature com estratégia.</div>
-                <div class="course-back-price">R$ 347</div>
-                <a href="curso-detalhe.html?id=2" class="btn-accent-custom" style="font-size: 0.8rem; padding: 0.6rem 1.5rem;">Ver detalhes</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 reveal">
-          <div class="course-card-wrapper">
-            <div class="course-card">
-              <div class="course-card-front">
-                <div class="course-card-img-placeholder" style="background: linear-gradient(135deg, #2C3E50, #3A506B);">🎨</div>
-                <div class="course-card-body">
-                  <div class="course-tag">Design</div>
-                  <div class="course-title">UI/UX Design com Figma</div>
-                  <div class="course-info">
-                    <span><i class="fas fa-clock me-1"></i>90h</span>
-                    <span><i class="fas fa-users me-1"></i>2.870 alunos</span>
-                    <span><i class="fas fa-star me-1 text-warning"></i>4.9</span>
-                  </div>
-                  <div class="course-price-front mt-2">R$ 397</div>
-                </div>
-              </div>
-              <div class="course-card-back">
-                <div class="course-back-title">UI/UX com Figma</div>
-                <div class="course-back-desc">Pesquisa, wireframe, prototipagem e entrega de projetos reais. Construa seu portfólio do zero.</div>
-                <div class="course-back-price">R$ 397</div>
-                <a href="curso-detalhe.html?id=3" class="btn-accent-custom" style="font-size: 0.8rem; padding: 0.6rem 1.5rem;">Ver detalhes</a>
-              </div>
-            </div>
-          </div>
+          <button class="carousel-control-prev" data-bs-target="#depoimentos" data-bs-slide="prev"><span class="carousel-control-prev-icon" style="filter:invert(1)"></span></button>
+          <button class="carousel-control-next" data-bs-target="#depoimentos" data-bs-slide="next"><span class="carousel-control-next-icon" style="filter:invert(1)"></span></button>
         </div>
       </div>
-      <div class="text-center mt-5 reveal">
-        <a href="cursos.html" class="btn-primary-custom">
-          <i class="fas fa-th-large me-2"></i>Ver todos os cursos
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="testimonials-section">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <span class="section-eyebrow" style="color: var(--accent-light);">O que dizem nossos alunos</span>
-        <h2 class="section-title" style="color: var(--bg-white);">Histórias de sucesso reais</h2>
-        <div class="section-divider"></div>
-      </div>
-      <div class="row g-4">
-        <div class="col-md-4 reveal">
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            <p class="testimonial-text">"Após o curso de Full Stack, recebi uma proposta de emprego antes mesmo de terminar o módulo final. A qualidade do conteúdo é incomparável."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">R</div>
-              <div>
-                <p class="testimonial-name">Rafael Mendes</p>
-                <p class="testimonial-role">Dev Frontend na TechBR</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 reveal">
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            <p class="testimonial-text">"Triplicei meu faturamento em 6 meses aplicando as estratégias do curso de Marketing Digital. Vale cada centavo investido."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">J</div>
-              <div>
-                <p class="testimonial-name">Juliana Costa</p>
-                <p class="testimonial-role">Empreendedora Digital</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 reveal">
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
-            <p class="testimonial-text">"O suporte dos tutores faz toda a diferença. Nunca me senti sozinho no processo de aprendizado. Já indiquei para 5 amigos."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">C</div>
-              <div>
-                <p class="testimonial-name">Carlos Oliveira</p>
-                <p class="testimonial-role">UX Designer Sênior</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-section">
-    <div class="container text-center position-relative">
-      <div class="reveal">
-        <span class="section-eyebrow" style="color: var(--primary-color);">Comece hoje mesmo</span>
-        <h2 class="cta-title">Sua transformação começa com um clique</h2>
-        <p class="cta-subtitle">Junte-se a mais de 12.500 profissionais que já mudaram de vida com a Tecno Brasília.</p>
-        <div class="d-flex gap-3 justify-content-center flex-wrap">
-          <a href="matricula.html" class="btn-primary-custom">
-            <i class="fas fa-rocket me-2"></i>Matricular agora
-          </a>
-          <a href="contato.html" class="btn-outline-custom" style="border-color: var(--primary-color); color: var(--primary-color);">
-            <i class="fas fa-comments me-2"></i>Falar com consultor
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="row g-5">
-        <div class="col-lg-4">
-          <span class="footer-brand">Tecno <span>Brasília</span></span>
-          <p class="footer-description">Há mais de 10 anos formando profissionais de alto desempenho com cursos que unem teoria, prática e mercado de trabalho.</p>
-          <div class="footer-social">
-            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-2">
-          <h5 class="footer-heading">Navegação</h5>
-          <ul class="footer-links">
-            <li><a href="index.html">Início</a></li>
-            <li><a href="sobre.html">Sobre nós</a></li>
-            <li><a href="cursos.html">Cursos</a></li>
-            <li><a href="matricula.html">Matrícula</a></li>
-            <li><a href="contato.html">Contato</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-6 col-lg-2">
-          <h5 class="footer-heading">Cursos</h5>
-          <ul class="footer-links">
-            <li><a href="#">Full Stack Dev</a></li>
-            <li><a href="#">Marketing Digital</a></li>
-            <li><a href="#">UI/UX Design</a></li>
-            <li><a href="#">Data Science</a></li>
-            <li><a href="#">Gestão de Projetos</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-4">
-          <h5 class="footer-heading">Contato</h5>
-          <div class="footer-contact-item">
-            <i class="fas fa-map-marker-alt footer-contact-icon"></i>
-            <span>Av. Brasil, 1500 — Goiânia, GO, 74000-000</span>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fas fa-phone footer-contact-icon"></i>
-            <span>(62) 3000-1234 | (62) 99900-0000</span>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fas fa-envelope footer-contact-icon"></i>
-            <span>contato@tecnobrasilia.com.br</span>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fas fa-clock footer-contact-icon"></i>
-            <span>Seg–Sex 8h–18h | Sáb 8h–12h</span>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 Tecno Brasília. Todos os direitos reservados.</p>
-        <p>
-          <a href="#" style="color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-right: 1rem;">Política de Privacidade</a>
-          <a href="#" style="color: rgba(255,255,255,0.4); font-size: 0.75rem;">Termos de Uso</a>
-        </p>
-      </div>
-    </div>
-  </footer>
-
+    </section>
+  </main>
+  <div id="footer-mount"></div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="/front/static/api.js"></script>
+  <script src="/front/static/main.js"></script>
+  <script>
+    mountLayout('home');
+    (async () => {
+      try {
+        const data = await API.getCursos({ limit: 3 });
+        const cursos = data.cursos || [];
+        const html = cursos.length ? cursos.map(c => `
+          <div class="col-md-4">
+            <div class="card curso-card">
+              <img src="${c.imagem || 'https://placehold.co/600x400?text=Curso'}" alt="${c.curso}">
+              <div class="card-body">
+                <span class="badge bg-primary mb-2">${c.nivel}</span>
+                <h5 class="card-title">${c.curso}</h5>
+                <p class="card-text text-truncate">${c.descricao}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <strong class="text-primary">${brl(c.preco)}</strong>
+                  <a href="curso-detalhe.html?id=${c.id}" class="btn btn-sm btn-primary">Ver</a>
+                </div>
+              </div>
+            </div>
+          </div>`).join('') : '<p class="text-center">Nenhum curso disponível no momento.</p>';
+        document.getElementById('cursos-destaque').innerHTML = html;
+      } catch(e) {
+        document.getElementById('cursos-destaque').innerHTML = `
+          <div class="col-12">
+            <div style="
+              background:#fdecea; border-left:4px solid #dc3545; color:#b02a37;
+              border-radius:10px; padding:18px 20px; display:flex; gap:14px;
+              align-items:flex-start; max-width:560px; margin:0 auto;
+            ">
+              <i class="fas fa-circle-exclamation" style="font-size:1.4rem; margin-top:2px;"></i>
+              <div>
+                <strong>Não foi possível carregar os cursos em destaque.</strong>
+                <div class="small mt-1">Verifique sua conexão ou tente novamente em alguns instantes.</div>
+              </div>
+            </div>
+          </div>`;
+      }
+    })();
+  </script>
 </body>
 </html>

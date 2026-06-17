@@ -11,7 +11,7 @@ from api.funcoes_auxiliaries import converter_cpf
 from api.models import Admin, Alunos
 from api.schema_alunos import AlunosFilter, AlunosList, AlunosResponse, AlunosSchemas, AlunosUpdate
 from api.schema_cursos import Message
-from api.security import get_current_user, get_password_hash
+from api.security import get_current_user
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -26,13 +26,10 @@ router = APIRouter(prefix="/alunos", tags=["alunos"])
 
 
 @router.post("/", response_model=AlunosResponse, status_code=HTTPStatus.CREATED)
-async def cadastrar_alunos(alunos: AlunosSchemas, session: T_session, current_user: CurrentUser):
-
-    if current_user.acesso != "Administrador":
-        raise HTTPException(status_code=HTTPStatus.FORBIDDEN, detail="Permissão negada para esse tipo de ação")
+async def cadastrar_alunos(alunos: AlunosSchemas, session: T_session):
 
     aluno_db = await session.scalar(
-        select(Alunos).where((Alunos.nome == alunos.nome) | (Alunos.cpf == converter_cpf(alunos.cpf)) | (Alunos.username == alunos.username))
+        select(Alunos).where((Alunos.nome == alunos.nome) | (Alunos.cpf == converter_cpf(alunos.cpf)) | (Alunos.email == alunos.email))
     )
 
     if aluno_db:
@@ -41,12 +38,10 @@ async def cadastrar_alunos(alunos: AlunosSchemas, session: T_session, current_us
 
         if aluno_db.cpf == alunos.cpf:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno cadastrado com esse CPF")
-        if aluno_db.username == alunos.username:
+        if aluno_db.email == alunos.email:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno cadastrado com esse email")
 
-    aluno_db = Alunos(
-        nome=alunos.nome, username=alunos.username, cpf=converter_cpf(alunos.cpf), password=get_password_hash(alunos.password), acesso=alunos.acesso
-    )
+    aluno_db = Alunos(nome=alunos.nome, email=alunos.email, cpf=converter_cpf(alunos.cpf), telefone=alunos.telefone, status=alunos.status)
 
     session.add(aluno_db)
     await session.commit()
@@ -56,9 +51,8 @@ async def cadastrar_alunos(alunos: AlunosSchemas, session: T_session, current_us
 
 
 @router.get("/", response_model=AlunosList, status_code=HTTPStatus.OK)
-async def get_alunos(session: T_session, current_user: CurrentUser, filter_alunos: FilterAlunos):
-    if current_user.acesso != "Administrador":
-        raise HTTPException(status_code=HTTPStatus.FORBIDDEN, detail="Permissão negada para esse tipo de ação")
+async def get_alunos(session: T_session,  filter_alunos: FilterAlunos):
+    
 
     get_alunos = await session.scalars(select(Alunos).offset(filter_alunos.offset).limit(filter_alunos.limit))
 
@@ -79,12 +73,12 @@ async def uptade_alunos(alunos_id: int, current_user: CurrentUser, session: T_se
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Aluno não encontrado")
 
     if alunos.nome:
-        username_em_uso = await session.scalar(select(Alunos).where(Alunos.nome == alunos.nome, Alunos.id != alunos_id))
-        if username_em_uso:
+        nome_em_uso = await session.scalar(select(Alunos).where(Alunos.nome == alunos.nome, Alunos.id != alunos_id))
+        if nome_em_uso:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno com esse nome")
 
-    if alunos.username:
-        email_em_uso = await session.scalar(select(Alunos).where(Alunos.username == alunos.username, Admin.id != alunos_id))
+    if alunos.email:
+        email_em_uso = await session.scalar(select(Alunos).where(Alunos.email == alunos.email, Admin.id != alunos_id))
         if email_em_uso:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já tem um aluno com esse email")
 

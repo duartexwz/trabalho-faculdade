@@ -25,20 +25,7 @@ CurrentUser = Annotated[Admin, Depends(get_current_user)]
 
 
 @router.post("/", response_model=MatriculasResponse, status_code=HTTPStatus.CREATED)
-async def cadastrar_matricula(matricula: MatriculasSchemas, session: T_session, current_user: CurrentUser):
-
-    if current_user.acesso == "Administrador":
-        aluno_id = matricula.aluno_id
-    else:
-        aluno_id = current_user.id
-
-    aluno_db = await session.scalar(select(Alunos).where(Alunos.id == aluno_id))
-    if not aluno_db:
-        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Aluno não encontrado")
-
-    curso_db = await session.scalar(select(Cursos).where(Cursos.id == matricula.curso_id))
-    if not curso_db:
-        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Curso não encontrado")
+async def cadastrar_matricula(matricula: MatriculasSchemas, session: T_session):
 
     matricula_existente = await session.scalar(
         select(Matriculas).where((Matriculas.aluno_id == matricula.aluno_id) & (Matriculas.curso_id == matricula.curso_id))
@@ -50,7 +37,10 @@ async def cadastrar_matricula(matricula: MatriculasSchemas, session: T_session, 
         aluno_id=matricula.aluno_id,
         curso_id=matricula.curso_id,
         status=matricula.status,
-        valor_pago=matricula.valor_pago,
+        cpf=matricula.cpf,
+        telefone=matricula.telefone,
+        email=matricula.email,
+        nome=matricula.nome,
     )
 
     session.add(matricula_db)
@@ -61,11 +51,9 @@ async def cadastrar_matricula(matricula: MatriculasSchemas, session: T_session, 
 
 
 @router.get("/", response_model=MatriculasList, status_code=HTTPStatus.OK)
-async def get_matriculas(session: T_session, current_user: CurrentUser, filter_matriculas: FilterMatriculas):
+async def get_matriculas(session: T_session, filter_matriculas: FilterMatriculas):
 
-    if current_user.acesso != "Administrador":
-        raise HTTPException(status_code=HTTPStatus.FORBIDDEN, detail="Permissão negada para esse tipo de ação")
-
+    
     query = select(Matriculas)
 
     if filter_matriculas.aluno_id:
@@ -83,10 +71,8 @@ async def get_matriculas(session: T_session, current_user: CurrentUser, filter_m
 
 
 @router.patch("/{matricula_id}", response_model=MatriculasResponse, status_code=HTTPStatus.OK)
-async def update_matricula(matricula_id: int, current_user: CurrentUser, session: T_session, matricula: MatriculasUpdate):
+async def update_matricula(matricula_id: int, session: T_session, matricula: MatriculasUpdate):
 
-    if current_user.acesso != "Administrador":
-        raise HTTPException(status_code=HTTPStatus.FORBIDDEN, detail="Permissão negada para esse tipo de ação")
 
     matricula_db = await session.scalar(select(Matriculas).where(Matriculas.id == matricula_id))
 

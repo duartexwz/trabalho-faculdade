@@ -172,7 +172,10 @@ async def matricula(session, alunos, cursos):
         aluno_id=alunos.id,
         curso_id=cursos.id,
         status="Ativo",
-        valor_pago=Decimal("100.00"),
+        nome="Teste",
+        cpf="012.698.365-99",
+        email="matricula@teste.com",
+        telefone="61984092729",
     )
     session.add(matricula)
     await session.commit()

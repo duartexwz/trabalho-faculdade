@@ -51,10 +51,12 @@ class FilterPage(BaseModel):
 class CursosFilter(BaseModel):
     curso: str | None = None
     descricao: str | None = None
-    status: str | None = None
     carga_horaria: int | None = None
     nivel: str | None = None
     categoria: str | None = None
+    preco: Decimal | None = None
+    imagem: str | None = None
+    status: str | None = None
     offset: int = 0
     limit: int = 10
 
@@ -62,7 +64,9 @@ class CursosFilter(BaseModel):
 class CursosUpdate(BaseModel):
     curso: str | None = None
     descricao: str | None = None
-    status: str | None = None
     carga_horaria: int | None = None
     nivel: str | None = None
     categoria: str | None = None
+    preco: Decimal | None = None
+    imagem: str | None = None
+    status: str | None = None

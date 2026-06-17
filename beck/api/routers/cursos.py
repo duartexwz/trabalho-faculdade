@@ -58,19 +58,23 @@ async def create_curso(session: T_session, curso: CursosSchema, current_user: Cu
 
 
 @router.get("/", response_model=CursosList, status_code=HTTPStatus.OK)
-async def get_cursos(session: T_session, filter_cursos: FilterCursos, current_user: CurrentUser):
-
-    if current_user.acesso != "Administrador":
-        raise HTTPException(status_code=HTTPStatus.FORBIDDEN, detail="Permissão negada para esse tipo de ação")
+async def get_cursos(session: T_session, filter_cursos: FilterCursos):
 
     query = select(Cursos)
 
     if filter_cursos.curso:
-        query = query.where(Cursos.curso.ilike(f"{filter_cursos.curso}%"))
+        query = query.where(Cursos.curso.ilike(f"%{filter_cursos.curso}%"))
 
-    get_cursos = await session.scalars(select(Cursos).offset(filter_cursos.offset).limit(filter_cursos.limit))
+    if getattr(filter_cursos, "categoria", None):
+        query = query.where(Cursos.categoria == filter_cursos.categoria)
 
-    filtrados = get_cursos.all()
+    if getattr(filter_cursos, "nivel", None):
+        query = query.where(Cursos.nivel == filter_cursos.nivel)
+
+    query = query.offset(filter_cursos.offset).limit(filter_cursos.limit)
+
+    resultados = await session.scalars(query)
+    filtrados = resultados.all()
 
     return {"cursos": filtrados}
 

@@ -10,4 +10,4 @@ poetry run alembic upgrade head
 
 
 echo "Iniciando o uvicorn"
-poetry run uvicorn api.app:app --host 0.0.0.0 --port 8000 
+poetry run uvicorn api.app:app --host 0.0.0.0 --port 8000 --reload

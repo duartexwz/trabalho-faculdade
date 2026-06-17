@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carrinho - Tecno Brasília</title>
+  <meta name="description" content="Revise seus cursos e finalize sua matrícula na Tecno Brasília.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="/front/assets/style.css" rel="stylesheet">
+</head>
+<body data-page="matricula">
+  <div id="navbar-mount"></div>
+
+  <main style="padding-top:100px; padding-bottom:60px;">
+    <div class="container">
+      <div class="section-title">
+        <h2>Meu Carrinho</h2>
+        <p>Revise os cursos selecionados e finalize sua matrícula.</p>
+      </div>
+
+      <!-- Resultado da matrícula (sucesso ou erro), fica visível até a
+           pessoa decidir o próximo passo -->
+      <div id="resultado-matricula" class="mb-4 d-none"></div>
+
+      <!-- Aviso para quem não está logado -->
+      <div id="aviso-login" class="alert alert-warning d-none">
+        <i class="fas fa-circle-exclamation me-2"></i>
+        Você precisa estar logado para finalizar a matrícula.
+        <a href="login.html" class="fw-semibold">Entrar agora</a>
+      </div>
+
+      <!-- Carrinho vazio -->
+      <div id="carrinho-vazio" class="text-center text-muted py-5 d-none">
+        <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+        <p>Seu carrinho está vazio.</p>
+        <a href="cursos.html" class="btn btn-primary">Ver cursos</a>
+      </div>
+
+      <!-- Lista de itens -->
+      <div id="carrinho-lista" class="row g-3 mb-4"></div>
+
+      <!-- Dados para a matrícula (preenchidos pelo próprio usuário) -->
+      <div id="dados-matricula" class="p-4 border rounded mb-4 d-none">
+        <h6 class="mb-3">Seus dados para a matrícula</h6>
+        <div class="mb-3">
+          <label class="form-label">Nome completo *</label>
+          <input type="text" id="m-nome" class="form-control" placeholder="Seu nome completo">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">E-mail *</label>
+          <input type="email" id="m-email" class="form-control" placeholder="seu@email.com">
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">CPF *</label>
+            <input type="text" id="m-cpf" class="form-control" data-mask="cpf" placeholder="000.000.000-00">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Telefone *</label>
+            <input type="text" id="m-telefone" class="form-control" data-mask="tel" placeholder="(00) 00000-0000">
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumo + finalizar -->
+      <div id="carrinho-resumo" class="p-4 border rounded d-none">
+        <div class="d-flex justify-content-between align-items-center fs-5 fw-bold mb-3">
+          <span>Total</span>
+          <span id="carrinho-total">R$ 0,00</span>
+        </div>
+        <button id="btn-finalizar" class="btn btn-primary w-100 py-2 fw-semibold">
+          Finalizar Matrícula
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-mount"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/front/static/api.js"></script>
+  <script src="/front/static/main.js"></script>
+  <script>
+    mountLayout('matricula');
+    if (typeof applyMasks === 'function') applyMasks();
+    renderCarrinho();
+
+    function renderCarrinho() {
+      const user = API.user();
+      const cart = getCart();
+
+      const avisoLogin = document.getElementById('aviso-login');
+      const vazio = document.getElementById('carrinho-vazio');
+      const lista = document.getElementById('carrinho-lista');
+      const resumo = document.getElementById('carrinho-resumo');
+
+      if (!cart.length) {
+        avisoLogin.classList.add('d-none');
+        document.getElementById('dados-matricula').classList.add('d-none');
+        lista.innerHTML = '';
+        resumo.classList.add('d-none');
+        vazio.classList.remove('d-none');
+        return;
+      }
+      vazio.classList.add('d-none');
+
+      // Só mostra aviso de login se houver itens no carrinho e o usuário
+      // não estiver logado. Não redireciona para cadastro.
+      avisoLogin.classList.toggle('d-none', !!user);
+      document.getElementById('dados-matricula').classList.toggle('d-none', !user);
+
+      lista.innerHTML = cart.map(c => `
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <div>
+                <h6 class="mb-1">${c.curso}</h6>
+                <span class="text-muted small">${c.categoria || ''}${c.nivel ? ' · ' + c.nivel : ''}</span>
+              </div>
+              <div class="text-end">
+                <strong class="text-primary d-block">${brl(c.preco)}</strong>
+                <button class="btn btn-sm btn-outline-danger mt-1" onclick="removerItem(${c.id})">
+                  <i class="fas fa-trash"></i> Remover
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      const total = cart.reduce((soma, c) => soma + Number(c.preco || 0), 0);
+      document.getElementById('carrinho-total').textContent = brl(total);
+      resumo.classList.remove('d-none');
+    }
+
+    function removerItem(id) {
+      removeFromCart(id); // já chama mountLayout() internamente (main.js)
+      renderCarrinho();
+    }
+    window.removerItem = removerItem;
+
+    document.getElementById('btn-finalizar').addEventListener('click', async () => {
+      const user = API.user();
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const cart = getCart();
+      if (!cart.length) return;
+
+      const nome = document.getElementById('m-nome').value.trim();
+      const email = document.getElementById('m-email').value.trim();
+      const cpf = document.getElementById('m-cpf').value.replace(/\D/g, '');
+      const telefone = document.getElementById('m-telefone').value.replace(/\D/g, '');
+
+      if (!nome || !email || cpf.length !== 11 || !telefone) {
+        showToast('Preencha nome, e-mail, CPF e telefone corretamente antes de finalizar.', 'warning');
+        return;
+      }
+
+      const btn = document.getElementById('btn-finalizar');
+      btn.disabled = true;
+      btn.textContent = 'Processando...';
+
+      let alunoId;
+      try {
+        // Tenta criar o aluno com os dados digitados no formulário.
+        const aluno = await API.createAluno({
+          nome,
+          cpf,
+          telefone,
+          email,
+          status: 'Ativo'
+        });
+        alunoId = aluno.id;
+      } catch (e) {
+        // Se já existe (409 - nome, CPF ou email duplicado), busca o aluno
+        // existente na lista para recuperar o id real.
+        try {
+          const lista = await API.getAlunos({ limit: 100 });
+          const existente = lista.alunos.find(a => a.cpf === cpf || a.nome === nome || a.email === email);
+          if (existente) {
+            alunoId = existente.id;
+          } else {
+            showInlineMessage(
+              '#resultado-matricula',
+              `Não foi possível identificar o aluno: ${e.message}`,
+              'error'
+            );
+            btn.disabled = false;
+            btn.textContent = 'Finalizar Matrícula';
+            return;
+          }
+        } catch (e2) {
+          showInlineMessage(
+            '#resultado-matricula',
+            `Erro ao verificar aluno existente: ${e2.message}`,
+            'error'
+          );
+          btn.disabled = false;
+          btn.textContent = 'Finalizar Matrícula';
+          return;
+        }
+      }
+
+      const sucesso = [];
+      const falhas = [];
+      for (const curso of cart) {
+        try {
+          await API.createMatricula({
+            nome,
+            aluno_id: alunoId,
+            curso_id: curso.id,
+            status: 'Ativo',
+            cpf,
+            telefone,
+            email
+          });
+          sucesso.push(curso.curso);
+        } catch (e) {
+          falhas.push({ curso: curso.curso, motivo: e.message });
+        }
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Finalizar Matrícula';
+
+      if (falhas.length && sucesso.length) {
+        // Parcialmente concluído: alguns cursos entraram, outros não.
+        showInlineMessage('#resultado-matricula', `
+          <strong>Matrícula parcialmente concluída.</strong>
+          <div class="mt-2 mb-1">Cursos confirmados:</div>
+          <ul class="mb-2">${sucesso.map(c => `<li>${c}</li>`).join('')}</ul>
+          <div class="mb-1">Não foi possível concluir:</div>
+          <ul class="mb-0">${falhas.map(f => `<li>${f.curso} — ${f.motivo}</li>`).join('')}</ul>
+        `, 'warning');
+        saveCart(cart.filter(c => !sucesso.includes(c.curso)));
+      } else if (falhas.length) {
+        // Nada foi concluído.
+        showInlineMessage('#resultado-matricula', `
+          <strong>Não foi possível concluir sua matrícula.</strong>
+          <ul class="mt-2 mb-0">${falhas.map(f => `<li>${f.curso} — ${f.motivo}</li>`).join('')}</ul>
+        `, 'error');
+      } else {
+        // Tudo certo: mostra a lista de cursos confirmados.
+        showInlineMessage('#resultado-matricula', `
+          <strong>Matrícula realizada com sucesso!</strong>
+          <div class="mt-2 mb-1">Você está matriculado(a) em:</div>
+          <ul class="mb-0">${sucesso.map(c => `<li>${c}</li>`).join('')}</ul>
+        `, 'success');
+        saveCart([]); // limpa o carrinho só depois de confirmado no backend
+      }
+
+      renderCarrinho();
+      document.getElementById('resultado-matricula').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  </script>
+</body>
+</html>
