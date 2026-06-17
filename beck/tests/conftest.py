@@ -160,9 +160,9 @@ async def token(client, user_ti):
 
 @pytest_asyncio.fixture
 async def token_comum(client, alunos):
-    response = await client.post("/login", data={"username": alunos.nome, "password": alunos.clean_password})
+    response = await client.post("/login/", data={"username": alunos.username, "password": alunos.clean_password})
 
-    print(response.json)
+    # breakpoint()
     return response.json()["access_token"]
 
 

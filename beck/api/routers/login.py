@@ -27,7 +27,7 @@ async def login_for_access_token(session: T_session, form_data: Oauth2Form):
     user = await session.scalar(select(Admin).where(Admin.username == form_data.username))
 
     if not user:
-        user = await session.scalar(select(Alunos).where(Alunos.nome == form_data.username))
+        user = await session.scalar(select(Alunos).where(Alunos.username == form_data.username))
 
     if not user or not verify_password(form_data.password, user.password):
         raise HTTPException(status_code=HTTPStatus.UNAUTHORIZED, detail="Incorrect email or password")

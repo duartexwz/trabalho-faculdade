@@ -63,8 +63,8 @@ concurrency = ["thread", "greenlet"]
 [tool.taskipy.tasks]
 lint = "ruff check"
 format = "ruff format"
-run = "fastapi dev beck/api/app.py"
-test = "task format && pytest -s -x --cov=beck/api -vv"
+run = "fastapi dev api/app.py"
+test = "task format && pytest -s -x --cov=api -vv"
 pre_format = "ruff check --fix"
 pre_test = "task lint"
 post_test = "coverage html"

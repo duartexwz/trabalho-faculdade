@@ -1,8 +1,8 @@
-"""criando tabela final
+"""atualizando tabelas admin
 
-Revision ID: 9e1a548a87f5
+Revision ID: 0a37b7049c66
 Revises: 
-Create Date: 2026-06-16 08:25:41.823757
+Create Date: 2026-06-17 08:33:33.245135
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '9e1a548a87f5'
+revision: str = '0a37b7049c66'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,28 +24,26 @@ def upgrade() -> None:
     op.create_table('admin',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(), nullable=False),
-    sa.Column('email_admin', sa.String(), nullable=False),
     sa.Column('password', sa.String(), nullable=False),
     sa.Column('acesso', sa.String(), nullable=False),
-    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.TIMESTAMP(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email_admin'),
     sa.UniqueConstraint('username')
     )
     op.create_table('alunos',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nome', sa.String(), nullable=False),
-    sa.Column('email', sa.String(), nullable=False),
+    sa.Column('username', sa.String(), nullable=False),
     sa.Column('cpf', sa.String(), nullable=False),
     sa.Column('password', sa.String(), nullable=False),
     sa.Column('acesso', sa.String(), nullable=False),
-    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.TIMESTAMP(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('cpf'),
-    sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('nome')
+    sa.UniqueConstraint('nome'),
+    sa.UniqueConstraint('username')
     )
     op.create_table('cursos',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -57,7 +55,7 @@ def upgrade() -> None:
     sa.Column('categoria', sa.String(), nullable=False),
     sa.Column('imagem', sa.String(), nullable=False),
     sa.Column('status', sa.String(), nullable=False),
-    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.TIMESTAMP(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('curso')
@@ -66,11 +64,11 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('aluno_id', sa.Integer(), nullable=False),
     sa.Column('curso_id', sa.Integer(), nullable=False),
-    sa.Column('data_matricula', sa.TIMESTAMP(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('data_matricula', sa.TIMESTAMP(), server_default=sa.text('now()'), nullable=True),
     sa.Column('status', sa.String(), nullable=False),
     sa.Column('valor_pago', sa.DECIMAL(precision=10, scale=2), nullable=False),
-    sa.ForeignKeyConstraint(['aluno_id'], ['alunos.id'], ),
-    sa.ForeignKeyConstraint(['curso_id'], ['cursos.id'], ),
+    sa.ForeignKeyConstraint(['aluno_id'], ['alunos.id'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['curso_id'], ['cursos.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

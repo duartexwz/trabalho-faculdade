@@ -57,7 +57,7 @@ async def get_current_user(token: Token, session: T_session):
     user = await session.scalar(select(Admin).where(Admin.username == subject_email))
 
     if not user:
-        user = await session.scalar(select(Alunos).where(Alunos.nome == subject_email))
+        user = await session.scalar(select(Alunos).where(Alunos.username == subject_email))
 
     if not user:
         raise credentials_exception
