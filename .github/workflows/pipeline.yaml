@@ -1,11 +1,11 @@
 name: Pipeline
-
+ 
 on: [push, pull_request]
-
+ 
 jobs:
   test:
     runs-on: ubuntu-latest
-
+ 
     env:
       DATABASE_URL: postgresql+psycopg://postgres:admin@127.0.0.1:5432/api_db
       ACCESS_TOKEN_EXPIRE_MINUTES: "30"
@@ -14,26 +14,36 @@ jobs:
       CLIENT_ID: "1"
       ALGORITHM: "HS256"
       ALLOW_ORIGINS: "*"
-
+ 
     defaults:
       run:
         working-directory: ./beck
-
+ 
     steps:
       - name: Copia os arquivos do repositório
         uses: actions/checkout@v4
-
+ 
       - name: Instalar o python
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-        
+ 
       - name:  Instalar o poetry
         run: pipx install poetry
-
+ 
       - name: Instalar dependências
         run: poetry install --no-root
-
+ 
+      # STEP TEMPORÁRIO DE DEBUG — remover depois de identificar o problema
+      - name: "[DEBUG] Verificar env vars e Settings"
+        run: |
+          echo "--- env vars brutas (mascaradas pelo GitHub se forem secret) ---"
+          echo "ALGORITHM='$ALGORITHM'"
+          echo "DATABASE_URL='$DATABASE_URL'"
+          echo "ACCESS_TOKEN_EXPIRE_MINUTES='$ACCESS_TOKEN_EXPIRE_MINUTES'"
+          echo "CLIENT_ID='$CLIENT_ID'"
+          echo "--- via python/pydantic Settings ---"
+          poetry run python -c "from api.settings import Settings; s = Settings(); print(repr(s.ALGORITHM), repr(s.SECRET_KEY[:5]), repr(s.DATABASE_URL))"
+ 
       - name: Executar testes
-        run: poetry run task test  
-        
+        run: poetry run task test
