@@ -6,6 +6,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./beck
+
     steps:
       - name: Copia os arquivos do repositório
         uses: actions/checkout@v4
