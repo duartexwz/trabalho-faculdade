@@ -12,7 +12,7 @@ class UsuariosResponse(BaseModel):
     id: int
     nome: str
     username: EmailStr
-    password: str
+
     acesso: str
 
 
@@ -33,7 +33,6 @@ class FilterPage(BaseModel):
 class UsuariosFilter(BaseModel):
     nome: str | None = None
     username: EmailStr | None = None
-    password: str | None = None
     acesso: str | None = None
     offset: int = 0
     limit: int = 10

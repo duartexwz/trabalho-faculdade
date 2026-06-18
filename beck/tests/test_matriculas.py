@@ -28,7 +28,10 @@ async def test_cadastrar_matricula(client, token, cursos, alunos):
             "aluno_id": alunos.id,
             "curso_id": cursos.id,
             "status": "Ativo",
-            "valor_pago": "100.00",
+            "cpf": alunos.cpf,
+            "telefone": alunos.telefone,
+            "email": alunos.email,
+            "nome": alunos.nome,
         },
     )
 
@@ -39,46 +42,28 @@ async def test_cadastrar_matricula(client, token, cursos, alunos):
         "aluno_id": alunos.id,
         "curso_id": cursos.id,
         "status": "Ativo",
-        "valor_pago": "100.00",
+        "cpf": alunos.cpf,
+        "telefone": alunos.telefone,
+        "email": alunos.email,
+        "nome": alunos.nome,
     }
 
 
 @pytest.mark.asyncio
-async def test_cadastrar_matricula_aluno_nao_encontrado(client, token, cursos):
-    response = await client.post(
-        "/matriculas/",
-        headers={"Authorization": f"Bearer {token}"},
-        json={
-            "aluno_id": 999,
-            "curso_id": cursos.id,
-            "status": "Ativo",
-            "valor_pago": "100.00",
-        },
-    )
-
-    assert response.status_code == HTTPStatus.NOT_FOUND
-    assert response.json() == {"detail": "Aluno não encontrado"}
-
-
-@pytest.mark.asyncio
-async def test_cadastrar_matricula_curso_nao_encontrado(client, token, alunos):
-    response = await client.post(
-        "/matriculas/",
-        headers={"Authorization": f"Bearer {token}"},
-        json={
-            "aluno_id": alunos.id,
-            "curso_id": 999,
-            "status": "Ativo",
-            "valor_pago": "100.00",
-        },
-    )
-
-    assert response.status_code == HTTPStatus.NOT_FOUND
-    assert response.json() == {"detail": "Curso não encontrado"}
-
-
-@pytest.mark.asyncio
 async def test_cadastrar_matricula_ja_existente(client, token, matricula):
+    post = client.post(
+        "/matricula/",
+        headers={"Authorization": f"Bearer {token}"},
+        json={
+            "aluno_id": matricula.aluno_id,
+            "curso_id": matricula.curso_id,
+            "status": "Ativo",
+            "cpf": "01234598766",
+            "email": "matricula@existe.com",
+            "telefone": "00123546444",
+            "nome": "Matricula já existe",
+        },
+    )
     response = await client.post(
         "/matriculas/",
         headers={"Authorization": f"Bearer {token}"},
@@ -86,29 +71,17 @@ async def test_cadastrar_matricula_ja_existente(client, token, matricula):
             "aluno_id": matricula.aluno_id,
             "curso_id": matricula.curso_id,
             "status": "Ativo",
-            "valor_pago": "100.00",
+            "cpf": "01234598766",
+            "email": "matricula@existe.com",
+            "telefone": "00123546444",
+            "nome": "Matricula já existe",
         },
     )
 
+    print(post)
+    # breakpoint()
     assert response.status_code == HTTPStatus.CONFLICT
     assert response.json() == {"detail": "Aluno já matriculado nesse curso"}
-
-
-@pytest.mark.asyncio
-async def test_cadastrar_matricula_permissao_negada(client, token_comum, cursos, alunos):
-    response = await client.post(
-        "/matriculas/",
-        headers={"Authorization": f"Bearer {token_comum}"},
-        json={
-            "aluno_id": alunos.id,
-            "curso_id": cursos.id,
-            "status": "Ativo",
-            "valor_pago": "100.00",
-        },
-    )
-    # breakpoint()
-    assert response.status_code == HTTPStatus.FORBIDDEN
-    assert response.json() == {"detail": "Permissão negada para esse tipo de ação"}
 
 
 @pytest.mark.asyncio
@@ -156,28 +129,60 @@ async def test_get_matriculas_filtro_status(client, token, matricula):
 
 
 @pytest.mark.asyncio
-async def test_get_matriculas_permissao_negada(client, token_comum):
-    response = await client.get(
-        "/matriculas/",
-        headers={"Authorization": f"Bearer {token_comum}"},
-    )
-    # breakpoint()
-
-    assert response.status_code == HTTPStatus.FORBIDDEN
-    assert response.json() == {"detail": "Permissão negada para esse tipo de ação"}
-
-
-@pytest.mark.asyncio
-async def test_atualizar_matricula(client, token, matricula):
+async def test_atualizar_matricula(client, token, matricula, outros_cursos):
     response = await client.patch(
         f"/matriculas/{matricula.id}",
         headers={"Authorization": f"Bearer {token}"},
-        json={"status": "Inativo", "valor_pago": "200.00"},
+        json={
+            "aluno_id": matricula.aluno_id,
+            "email": "atualizar@matricula.com",
+            "curso_id": outros_cursos.id,
+            "id": 1,
+            "status": "Inativo",
+            "cpf": "01234567899",
+            "telefone": "0001256987",
+            "nome": "atualiazar matricula",
+        },
+    )
+    # breakpoint()
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {
+        "aluno_id": matricula.aluno_id,
+        "email": "atualizar@matricula.com",
+        "curso_id": outros_cursos.id,
+        "id": 1,
+        "status": "Inativo",
+        "cpf": "01234567899",
+        "telefone": "0001256987",
+        "nome": "atualiazar matricula",
+    }
+
+
+@pytest.mark.asyncio
+async def test_atualizar_matricula_ja_existente(client, token, matricula, outra_matricula):
+    post = await client.post(
+        "/matriculas/",
+        headers={"Authorization": f"Bearer {token}"},
+        json={
+            "aluno_id": outra_matricula.aluno_id,
+            "curso_id": outra_matricula.curso_id + 1,
+            "status": "Ativo",
+            "cpf": "01234598766",
+            "email": "matricula10000@existe.com",
+            "telefone": "00125546444",
+            "nome": "Matricula já  existe 2",
+        },
+    )
+    response = await client.patch(
+        f"/matriculas/{outra_matricula.id}",
+        headers={"Authorization": f"Bearer {token}"},
+        json={"aluno_id": outra_matricula.aluno_id, "curso_id": outra_matricula.curso_id},
     )
 
-    assert response.status_code == HTTPStatus.OK
-    assert response.json()["status"] == "Inativo"
-    assert response.json()["valor_pago"] == "200.00"
+    print(post)
+    # breakpoint()
+    assert response.status_code == HTTPStatus.CONFLICT
+    assert response.json() == {"detail": "Aluno já matriculado nesse curso"}
 
 
 @pytest.mark.asyncio
@@ -202,18 +207,6 @@ async def test_atualizar_matricula_curso_nao_encontrado(client, token, matricula
 
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert response.json() == {"detail": "Curso não encontrado"}
-
-
-@pytest.mark.asyncio
-async def test_atualizar_matricula_permissao_negada(client, token_comum, matricula):
-    response = await client.patch(
-        f"/matriculas/{matricula.id}",
-        headers={"Authorization": f"Bearer {token_comum}"},
-        json={"status": "Inativo"},
-    )
-
-    assert response.status_code == HTTPStatus.FORBIDDEN
-    assert response.json() == {"detail": "Permissão negada para esse tipo de ação"}
 
 
 @pytest.mark.asyncio

@@ -38,6 +38,7 @@ async def cadastrar_alunos(alunos: AlunosSchemas, session: T_session):
 
         if aluno_db.cpf == alunos.cpf:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno cadastrado com esse CPF")
+
         if aluno_db.email == alunos.email:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno cadastrado com esse email")
 
@@ -51,8 +52,7 @@ async def cadastrar_alunos(alunos: AlunosSchemas, session: T_session):
 
 
 @router.get("/", response_model=AlunosList, status_code=HTTPStatus.OK)
-async def get_alunos(session: T_session,  filter_alunos: FilterAlunos):
-    
+async def get_alunos(session: T_session, filter_alunos: FilterAlunos):
 
     get_alunos = await session.scalars(select(Alunos).offset(filter_alunos.offset).limit(filter_alunos.limit))
 
@@ -75,12 +75,12 @@ async def uptade_alunos(alunos_id: int, current_user: CurrentUser, session: T_se
     if alunos.nome:
         nome_em_uso = await session.scalar(select(Alunos).where(Alunos.nome == alunos.nome, Alunos.id != alunos_id))
         if nome_em_uso:
-            raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno com esse nome")
+            raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno cadastrado com esse nome")
 
     if alunos.email:
         email_em_uso = await session.scalar(select(Alunos).where(Alunos.email == alunos.email, Admin.id != alunos_id))
         if email_em_uso:
-            raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já tem um aluno com esse email")
+            raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Já existe um aluno cadastrado com esse email")
 
     if alunos.cpf:
         cpf_em_uso = await session.scalar(select(Alunos).where(Alunos.cpf == alunos.cpf, Alunos.id != alunos_id))

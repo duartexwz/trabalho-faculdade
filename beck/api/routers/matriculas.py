@@ -6,7 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.database import get_session
-from api.models import Admin, Alunos, Cursos, Matriculas
+from api.models import Admin, Cursos, Matriculas
 from api.schema_cursos import Message
 from api.schema_matricula import (
     MatriculasFilter,
@@ -30,6 +30,7 @@ async def cadastrar_matricula(matricula: MatriculasSchemas, session: T_session):
     matricula_existente = await session.scalar(
         select(Matriculas).where((Matriculas.aluno_id == matricula.aluno_id) & (Matriculas.curso_id == matricula.curso_id))
     )
+
     if matricula_existente:
         raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Aluno já matriculado nesse curso")
 
@@ -53,7 +54,6 @@ async def cadastrar_matricula(matricula: MatriculasSchemas, session: T_session):
 @router.get("/", response_model=MatriculasList, status_code=HTTPStatus.OK)
 async def get_matriculas(session: T_session, filter_matriculas: FilterMatriculas):
 
-    
     query = select(Matriculas)
 
     if filter_matriculas.aluno_id:
@@ -73,7 +73,6 @@ async def get_matriculas(session: T_session, filter_matriculas: FilterMatriculas
 @router.patch("/{matricula_id}", response_model=MatriculasResponse, status_code=HTTPStatus.OK)
 async def update_matricula(matricula_id: int, session: T_session, matricula: MatriculasUpdate):
 
-
     matricula_db = await session.scalar(select(Matriculas).where(Matriculas.id == matricula_id))
 
     if not matricula_db:
@@ -85,9 +84,7 @@ async def update_matricula(matricula_id: int, session: T_session, matricula: Mat
             raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Curso não encontrado")
 
         matricula_existente = await session.scalar(
-            select(Matriculas).where(
-                (Matriculas.aluno_id == matricula_db.aluno_id) & (Matriculas.curso_id == matricula.curso_id) & (Matriculas.id != matricula_id)
-            )
+            select(Matriculas).where((Matriculas.aluno_id == matricula_db.aluno_id) & (Matriculas.curso_id == matricula.curso_id))
         )
         if matricula_existente:
             raise HTTPException(status_code=HTTPStatus.CONFLICT, detail="Aluno já matriculado nesse curso")
