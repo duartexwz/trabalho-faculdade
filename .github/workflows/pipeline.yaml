@@ -6,6 +6,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      ALLOW_ORIGINS: ${{ secrets.ALLOW_ORIGINS }}
+
     defaults:
       run:
         working-directory: ./beck
