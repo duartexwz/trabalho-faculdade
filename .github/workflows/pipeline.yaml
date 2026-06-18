@@ -12,8 +12,8 @@ jobs:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
       CLIENT_ID: "1"
-      ALGORITHM: ${{ secrets.ALGORITHM }}
-      ALLOW_ORIGINS: ${{ secrets.ALLOW_ORIGINS }}
+      ALGORITHM: "HS256"
+      ALLOW_ORIGINS: "*"
 
     defaults:
       run:
