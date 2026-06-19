@@ -14,7 +14,7 @@ from api.schema_cursos import (
 )
 from api.security import create_access_token, get_current_user, verify_password
 
-router = APIRouter(prefix="/login", tags=["login"])
+router = APIRouter(prefix="/login", tags=["login"], redirect_slashes=False)
 
 T_session = Annotated[AsyncSession, Depends(get_session)]
 FilterCursos = Annotated[CursosFilter, Query()]

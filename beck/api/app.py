@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.routers import admin, alunos, cursos, login, matriculas, usuarios
 from api.settings import settings
 
-app = FastAPI(title="Escola Tecno Brasilia", version="1.0.0")
+app = FastAPI(title="Escola Tecno Brasilia", version="1.0.0", redirect_slashes=False)
 
 origins = [
     "http://127.0.0.1:5500",

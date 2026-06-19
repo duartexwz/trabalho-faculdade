@@ -2,7 +2,7 @@ services:
   api_database:
     image: postgres
     volumes:
-     - pgdata:/var/lib/postgresql/18/docker
+     - pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: api_db

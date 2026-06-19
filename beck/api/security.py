@@ -15,7 +15,7 @@ from api.models import Admin, Usuarios
 from api.settings import Settings
 
 settings = Settings()  # type: ignore
-Oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+Oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/")
 Token = Annotated[str, Depends(Oauth2_scheme)]
 T_session = Annotated[AsyncSession, Depends(get_session)]
 password_hash = PasswordHash.recommended()

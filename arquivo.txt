@@ -1,0 +1,3 @@
+URL DO BANCO:
+
+DATABASE_URL=postgresql+psycopg://fly-user:025OPn7MFIumA9o4tnMaPnTm@pgbouncer.1zvn90knjn10kpew.flympg.net/fly-db

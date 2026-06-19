@@ -1,5 +1,9 @@
 #!/bin/sh
 
+
+set -e 
+
+
 echo "Aguradando o banco de dados iniciar..."
 
 sleep 5
