@@ -47,7 +47,7 @@ Execute a API:
 Bash
 uvicorn main:app --reload
 3. Configurando o Frontend
-O frontend é estático. Certifique-se de que a variável API_BASE_URL no arquivo /front/static/api.js esteja apontando para http://127.0.0.1:8000.
+O frontend é estático. Certifique-se de que a variável API_BASE_URL no arquivo /static/api.js esteja apontando para http://127.0.0.1:8000.
 
 Abra o arquivo index.html em um servidor local (Live Server no VS Code) para evitar problemas de CORS e carregamento de módulos.
 
